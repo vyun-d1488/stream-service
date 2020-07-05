@@ -9,14 +9,19 @@ import flash from "connect-flash";
 import cookieParser from "cookie-parser";
 import config from "./config/default";
 import "dotenv/config";
+import passport from "./auth/passport";
 
 const app = express();
 const FileStore = SessionFileStore(Session);
 const PORT = process.env.PORT;
-
+const CLUSTER = process.env.CLUSTER;
+console.log(CLUSTER);
 mongoose.connect(
-      "mongodb+srv://gokutok:111111ab@cluster0-pu7z4.azure.mongodb.net/mangaDB?retryWrites=true&w=majority",
-      { useNewUrlParser: true, useUnifiedTopology: true }
+      CLUSTER,
+      { useNewUrlParser: true, useUnifiedTopology: true },
+      (err) => {
+            console.log(err);
+      }
 );
 
 app.set("view engine", "ejs");
@@ -38,6 +43,12 @@ app.use(
             saveUninitialized: true,
       })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/login", require("./routes/login"));
+app.use("/register", require("./routes/register"));
 
 app.get("*", middleware.ensureLoggedIn(), (req, res) => {
       res.render("index");
