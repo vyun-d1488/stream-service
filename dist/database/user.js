@@ -1,17 +1,27 @@
 "use strict";
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+var mongoose = require("mongoose"),
+    bcrypt = require("bcrypt-nodejs"),
+    shortid = require("shortid"),
+    Schema = mongoose.Schema;
 
-var _bcryptNodejs = _interopRequireDefault(require("bcrypt-nodejs"));
-
-var _shortid = _interopRequireDefault(require("shortid"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var Schema = _mongoose["default"].Schema;
-var user = new Schema({
+var UserSchema = new Schema({
   username: String,
   email: String,
   password: String,
   stream_key: String
 });
+
+UserSchema.methods.generateHash = function (password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+UserSchema.methods.validPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+UserSchema.methods.generateStreamKey = function () {
+  return shortid.generate();
+};
+
+module.exports = UserSchema;

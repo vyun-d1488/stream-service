@@ -22,13 +22,20 @@ var _default = _interopRequireDefault(require("./config/default"));
 
 require("dotenv/config");
 
+var _passport = _interopRequireDefault(require("./auth/passport"));
+
+var _mediaServer = _interopRequireDefault(require("./media-server"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+_mediaServer["default"].run();
 
 var app = (0, _express["default"])();
 var FileStore = (0, _sessionFileStore["default"])(_expressSession["default"]);
 var PORT = process.env.PORT;
+var CLUSTER = process.env.CLUSTER;
 
-_mongoose["default"].connect("mongodb+srv://gokutok:111111ab@cluster0-pu7z4.azure.mongodb.net/mangaDB?retryWrites=true&w=majority", {
+_mongoose["default"].connect(CLUSTER, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -53,6 +60,10 @@ app.use((0, _expressSession["default"])({
   resave: true,
   saveUninitialized: true
 }));
+app.use(_passport["default"].initialize());
+app.use(_passport["default"].session());
+app.use("/login", require("./routes/login"));
+app.use("/register", require("./routes/register"));
 app.get("*", _connectEnsureLogin["default"].ensureLoggedIn(), function (req, res) {
   res.render("index");
 });

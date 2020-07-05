@@ -10,19 +10,15 @@ import cookieParser from "cookie-parser";
 import config from "./config/default";
 import "dotenv/config";
 import passport from "./auth/passport";
+import nms from "./media-server";
+
+nms.run();
 
 const app = express();
 const FileStore = SessionFileStore(Session);
 const PORT = process.env.PORT;
 const CLUSTER = process.env.CLUSTER;
-console.log(CLUSTER);
-mongoose.connect(
-      CLUSTER,
-      { useNewUrlParser: true, useUnifiedTopology: true },
-      (err) => {
-            console.log(err);
-      }
-);
+mongoose.connect(CLUSTER, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
