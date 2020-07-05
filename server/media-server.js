@@ -6,6 +6,7 @@ const nms = new NodeMediaServer(rmtp_server);
 
 nms.on("prePublish", (id, StreamPath, args) => {
       let stream_key = getStreamKeyFromStreamPath(StreamPath);
+
       console.log(
             "[NodeEvent on prePublish]",
             `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`

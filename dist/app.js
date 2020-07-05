@@ -53,7 +53,7 @@ app.use(_bodyParser["default"].json({
 }));
 app.use((0, _expressSession["default"])({
   store: new FileStore({
-    path: "./server/sessions"
+    path: "./sessions"
   }),
   secret: _default["default"].server.secret,
   maxAge: Date.now() + (60 + 1000 + 30),
