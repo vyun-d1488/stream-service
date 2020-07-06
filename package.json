@@ -1,15 +1,15 @@
 {
       "name": "stream-new",
       "version": "1.0.0",
-      "main": "index.js",
+      "main": "app.js",
       "author": "vyun-d1488 <ilyaspiypiy@gmail.com>",
       "license": "MIT",
       "scripts": {
-            "dev:start": "nodemon --exec babel-node server/app.js",
-            "start:server": "node ./dist/app.js",
-            "build:clean": "rimraf ./dist",
-            "build:webpack": "webpack --config internals/webpack.client.js",
-            "build:babel": "rimraf ./dist && babel server --out-dir dist/ --copy-files"
+            "server:start": "node ./dist/app.js",
+            "build:clean": "rimraf ./dist && rimraf ./public",
+            "build:babel": "rimraf ./dist && babel server --out-dir dist/ --copy-files",
+            "build:dev": "yarn build:babel && cross-env NODE_ENV=development webpack --config internals/webpack.client.js",
+            "build:prod": "yarn build:babel && cross-env NODE_ENV=production webpack --config internals/webpack.client.js"
       },
       "devDependencies": {
             "@babel/cli": "^7.8.4",
@@ -40,8 +40,8 @@
       "dependencies": {
             "@babel/preset-react": "^7.10.4",
             "babel-loader": "^8.1.0",
-            "chalk": "^4.1.0",
             "copy-webpack-plugin": "^6.0.3",
+            "cross-env": "^7.0.2",
             "css-loader": "^3.6.0",
             "dotenv": "^8.2.0",
             "file-loader": "^6.0.0",
