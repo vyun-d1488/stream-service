@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import path from "path";
 import middleware from "connect-ensure-login";
 import SessionFileStore from "session-file-store";
-import flash from "connect-flash";
+// import flash from "connect-flash";
 import cookieParser from "cookie-parser";
 import config from "./config/default";
 import "dotenv/config";
@@ -13,7 +13,7 @@ import passport from "./auth/passport";
 import nms from "./media-server";
 
 nms.run();
-
+const flash = require("connect-flash");
 const app = express();
 const FileStore = SessionFileStore(Session);
 const PORT = process.env.PORT;
@@ -23,7 +23,6 @@ mongoose.connect(CLUSTER, { useNewUrlParser: true, useUnifiedTopology: true });
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
 app.use(express.static("public"));
-app.use(flash());
 app.use(cookieParser());
 app.use(bodyParse.urlencoded({ extended: true }));
 app.use(bodyParse.json({ extended: true }));
@@ -40,11 +39,18 @@ app.use(
       })
 );
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/login", require("./routes/login"));
 app.use("/register", require("./routes/register"));
+
+app.get("/logout", (req, res) => {
+      req.logout();
+      req.flash("test", "flash");
+      return res.redirect("/login");
+});
 
 app.get("*", middleware.ensureLoggedIn(), (req, res) => {
       res.render("index");

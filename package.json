@@ -6,10 +6,10 @@
       "license": "MIT",
       "scripts": {
             "dev:start": "nodemon --exec babel-node server/app.js",
-            "build:clean": "rimraf ./dist",
-            "babel:build": "rimraf ./dist && babel server --out-dir dist/ --copy-files",
             "start:server": "node ./dist/app.js",
-            "webpack:build": "webpack --config internals/webpack.client.js"
+            "build:clean": "rimraf ./dist",
+            "build:webpack": "webpack --config internals/webpack.client.js",
+            "build:babel": "rimraf ./dist && babel server --out-dir dist/ --copy-files"
       },
       "devDependencies": {
             "@babel/cli": "^7.8.4",

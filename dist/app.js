@@ -14,8 +14,6 @@ var _connectEnsureLogin = _interopRequireDefault(require("connect-ensure-login")
 
 var _sessionFileStore = _interopRequireDefault(require("session-file-store"));
 
-var _connectFlash = _interopRequireDefault(require("connect-flash"));
-
 var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 
 var _default = _interopRequireDefault(require("./config/default"));
@@ -28,7 +26,10 @@ var _mediaServer = _interopRequireDefault(require("./media-server"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import flash from "connect-flash";
 _mediaServer["default"].run();
+
+var flash = require("connect-flash");
 
 var app = (0, _express["default"])();
 var FileStore = (0, _sessionFileStore["default"])(_expressSession["default"]);
@@ -43,7 +44,6 @@ _mongoose["default"].connect(CLUSTER, {
 app.set("view engine", "ejs");
 app.set("views", _path["default"].join(__dirname, "./views"));
 app.use(_express["default"]["static"]("public"));
-app.use((0, _connectFlash["default"])());
 app.use((0, _cookieParser["default"])());
 app.use(_bodyParser["default"].urlencoded({
   extended: true
@@ -60,10 +60,16 @@ app.use((0, _expressSession["default"])({
   resave: true,
   saveUninitialized: true
 }));
+app.use(flash());
 app.use(_passport["default"].initialize());
 app.use(_passport["default"].session());
 app.use("/login", require("./routes/login"));
 app.use("/register", require("./routes/register"));
+app.get("/logout", function (req, res) {
+  req.logout();
+  req.flash("test", "flash");
+  return res.redirect("/login");
+});
 app.get("*", _connectEnsureLogin["default"].ensureLoggedIn(), function (req, res) {
   res.render("index");
 });

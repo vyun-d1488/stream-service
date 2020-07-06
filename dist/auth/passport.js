@@ -41,11 +41,11 @@ _passport["default"].use("localRegister", new LocalStrategy({
 
     if (user) {
       if (user.email === email) {
-        req.flash("email", "email is already taken");
+        return done(null, false, req.flash("email", "email is already taken"));
       }
 
       if (user.username === req.body.username) {
-        req.flash("username", "username is already taken");
+        return done(null, false, req.flash("username", "username is already taken"));
       }
 
       return done(null, false);
