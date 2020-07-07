@@ -33,23 +33,15 @@ passport.use(
                               if (err) return done(err);
                               if (user) {
                                     if (user.email === email) {
-                                          return done(
-                                                null,
-                                                false,
-                                                req.flash(
-                                                      "email",
-                                                      "email is already taken"
-                                                )
+                                          req.flash(
+                                                "email",
+                                                "email is already taken"
                                           );
                                     }
                                     if (user.username === req.body.username) {
-                                          return done(
-                                                null,
-                                                false,
-                                                req.flash(
-                                                      "username",
-                                                      "username is already taken"
-                                                )
+                                          req.flash(
+                                                "username",
+                                                "username is already taken"
                                           );
                                     }
 

@@ -1,6 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 const webpack = require("webpack");
 const rules = require("./rules");
@@ -15,8 +16,10 @@ module.exports = {
             rules: rules,
       },
       devtool: "source-map",
+
       plugins: [
             new ProgressBarPlugin(),
+
             new MiniCssExtractPlugin({
                   filename: "style.css",
             }),

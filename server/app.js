@@ -6,13 +6,15 @@ import path from "path";
 import middleware from "connect-ensure-login";
 import SessionFileStore from "session-file-store";
 // import flash from "connect-flash";
+import job from "./cron/thumbnails";
 import cookieParser from "cookie-parser";
 import config from "./config/default";
 import "dotenv/config";
 import passport from "./auth/passport";
 import nms from "./media-server";
-
 nms.run();
+job.start();
+
 const flash = require("connect-flash");
 const app = express();
 const FileStore = SessionFileStore(Session);
@@ -45,6 +47,12 @@ app.use(passport.session());
 
 app.use("/login", require("./routes/login"));
 app.use("/register", require("./routes/register"));
+app.use("/user", require("./routes/user"));
+app.use("/streams", require("./routes/streams"));
+
+app.get("/test", (req, res) => {
+      res.send({ msg: "MSG" });
+});
 
 app.get("/logout", (req, res) => {
       req.logout();

@@ -2,7 +2,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const rules = [
       {
-            test: /\.s?[ac]ss$/,
+            test: /\.css$/i,
             use: [
                   MiniCssExtractPlugin.loader,
                   {
@@ -26,6 +26,7 @@ const rules = [
                   {
                         loader: "file-loader",
                         options: {
+                              publicPath: "thumbnails/",
                               outputPath: "/",
                         },
                   },
