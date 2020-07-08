@@ -14,6 +14,6 @@ Builds the app
 
 ### `Usage`
 
-##OBS studio 
+#OBS studio 
 
 Go to the Stream tab in the OBS settings, then change Server and Stream Key to your
