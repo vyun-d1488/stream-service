@@ -1,6 +1,11 @@
 import child_proc from "child_process";
 import config from "../config/default";
 import path from "path";
+import fs from "fs";
+const dir = process.cwd() + "/public/thumbnails/";
+if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+}
 
 const spawn = child_proc.spawn;
 const cmd = config.rtmp_server.trans.ffmpeg;

@@ -5,7 +5,6 @@
       "author": "vyun-d1488 <ilyaspiypiy@gmail.com>",
       "license": "MIT",
       "scripts": {
-            "server:dev:test": "nodemon --exec babel-node ./server/app.js",
             "server:dev": "nodemon ./build/app.js",
             "server:start": "node ./build/app.js",
             "build:clean": "rimraf ./build && rimraf ./public",
@@ -38,7 +37,8 @@
             "progress-bar-webpack-plugin": "^2.1.0",
             "request": "^2.79.0",
             "rimraf": "^3.0.2",
-            "session-file-store": "^1.4.0"
+            "session-file-store": "^1.4.0",
+            "uglifyjs-webpack-plugin": "^2.2.0"
       },
       "dependencies": {
             "@babel/preset-react": "^7.10.4",

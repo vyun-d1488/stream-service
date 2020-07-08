@@ -1,7 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 const webpack = require("webpack");
 const rules = require("./rules");
@@ -15,22 +15,20 @@ module.exports = {
       module: {
             rules: rules,
       },
-      devtool: "source-map",
+      devtool: false,
 
       plugins: [
             new ProgressBarPlugin(),
-
+            new UglifyJsPlugin(),
             new MiniCssExtractPlugin({
                   filename: "style.css",
-            }),
-            new webpack.ProvidePlugin({
-                  $: "jquery",
-                  jQuery: "jquery",
             }),
       ],
       mode: devMode ? "development" : "production",
       watch: devMode,
       performance: {
-            hints: process.env.NODE_ENV === "production" ? "warning" : false,
+            maxAssetSize: 1000000,
+            maxEntrypointSize: 1000000,
+            hints: devMode ? "warning" : false,
       },
 };

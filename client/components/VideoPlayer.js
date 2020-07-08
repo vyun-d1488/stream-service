@@ -45,18 +45,13 @@ export default class VideoPlayer extends Component {
             });
       }
 
-      componentWillUnmount() {
-            if (this.player) {
-                  this.player.dispose();
-            }
-      }
-
       render() {
             return (
                   <div>
                         {this.state.stream ? (
                               <div data-vjs-player>
                                     <video
+                                          width="700px"
                                           ref={(node) =>
                                                 (this.videoNode = node)
                                           }

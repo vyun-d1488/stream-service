@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Streams from "./Streams";
 import VideoPlayer from "./VideoPlayer";
-import { Router, Route } from "react-router-dom";
-
-const browserHistory = require("history").createBrowserHistory();
+import { Link, Route, Switch } from "react-router-dom";
 
 export default class Root extends Component {
       constructor(props) {
@@ -11,25 +9,29 @@ export default class Root extends Component {
       }
       render() {
             return (
-                  <Router history={browserHistory}>
-                        <h1>Streams</h1>
+                  <div>
+                        <Link to="/">Streams</Link>
                         <div>
-                              <Route
-                                    exact
-                                    path="/"
-                                    render={(props) => <Streams {...props} />}
-                              />
+                              <Switch>
+                                    <Route
+                                          exact
+                                          path="/"
+                                          render={(props) => (
+                                                <Streams {...props} />
+                                          )}
+                                    />
 
-                              <Route
-                                    exact
-                                    path="/stream/:username"
-                                    render={(props) => (
-                                          <VideoPlayer {...props} />
-                                    )}
-                              />
+                                    <Route
+                                          exact
+                                          path="/stream/:username"
+                                          render={(props) => (
+                                                <VideoPlayer {...props} />
+                                          )}
+                                    />
+                              </Switch>
                         </div>
                         <a href="logout">logout</a>
-                  </Router>
+                  </div>
             );
       }
 }
