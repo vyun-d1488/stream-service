@@ -1,10 +1,10 @@
-
+build
 public
 node_modules
 
-server/sessions/*
-
-
+sessions/*
 server/media/*
-!server/media/.gitkeepnode_modules
+
 .env
+yarn.lock
+yarn-error.log
