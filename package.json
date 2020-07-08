@@ -12,7 +12,8 @@
             "build:dev": "yarn build:babel && cross-env NODE_ENV=development webpack --config internals/webpack.client.js",
             "build:prod": "yarn build:babel && cross-env NODE_ENV=production webpack --config internals/webpack.client.js"
       },
-      "devDependencies": {
+      "devDependencies": {},
+      "dependencies": {
             "@babel/cli": "^7.8.4",
             "@babel/core": "^7.10.4",
             "@babel/node": "^7.8.4",
@@ -38,9 +39,7 @@
             "request": "^2.79.0",
             "rimraf": "^3.0.2",
             "session-file-store": "^1.4.0",
-            "uglifyjs-webpack-plugin": "^2.2.0"
-      },
-      "dependencies": {
+            "uglifyjs-webpack-plugin": "^2.2.0",
             "@babel/preset-react": "^7.10.4",
             "babel-loader": "^8.1.0",
             "copy-webpack-plugin": "^6.0.3",
