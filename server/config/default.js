@@ -4,13 +4,15 @@ const SECRET = process.env.SECRET;
 const FFMPEG = process.env.FFMPEG;
 
 const config = {
+      logType: 3,
+
       server: {
             secret: SECRET,
       },
       rtmp_server: {
             rtmp: {
                   port: 1935,
-                  chunk_size: 60000,
+                  chunk_size: 30000,
                   gop_cache: true,
                   ping: 60,
                   ping_timeout: 30,
@@ -25,12 +27,11 @@ const config = {
                   tasks: [
                         {
                               app: "live",
+                              rtmp: true,
+                              rtmpApp: "live-ac",
                               hls: true,
                               hlsFlags:
                                     "[hls_time=2:hls_list_size=3:hls_flags=delete_segments]",
-                              dash: true,
-                              dashFlags:
-                                    "[f=dash:window_size=3:extra_window_size=5]",
                         },
                   ],
             },

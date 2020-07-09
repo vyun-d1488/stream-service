@@ -8,11 +8,16 @@ import SessionFileStore from "session-file-store";
 import flash from "connect-flash";
 import job from "./cron/thumbnails";
 import cookieParser from "cookie-parser";
+import fs from "fs";
 import config from "./config/default";
 import "dotenv/config";
 import passport from "./auth/passport";
 import nms from "./media-server";
+const dir = path.resolve(process.cwd() + "/public/thumbnails/");
 
+if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+}
 nms.run();
 job.start();
 
@@ -52,7 +57,6 @@ app.use("/streams", require("./routes/streams"));
 
 app.get("/logout", (req, res) => {
       req.logout();
-      req.flash("test", "flash");
       return res.redirect("/login");
 });
 
