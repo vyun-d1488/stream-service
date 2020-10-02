@@ -13,11 +13,7 @@ import config from "./config/default";
 import "dotenv/config";
 import passport from "./auth/passport";
 import nms from "./media-server";
-const dir = path.resolve(process.cwd() + "/public/thumbnails/");
 
-if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-}
 nms.run();
 job.start();
 
@@ -29,21 +25,21 @@ mongoose.connect(CLUSTER, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
-app.use(express.static("public"));
+app.use(express.static("build/public"));
 app.use(cookieParser());
 app.use(bodyParse.urlencoded({ extended: true }));
 app.use(bodyParse.json({ extended: true }));
 
 app.use(
-      Session({
-            store: new FileStore({
-                  path: "./sessions",
-            }),
-            secret: config.server.secret,
-            maxAge: Date.now() + (60 + 1000 + 30),
-            resave: true,
-            saveUninitialized: true,
-      })
+	Session({
+		store: new FileStore({
+			path: "./sessions",
+		}),
+		secret: config.server.secret,
+		maxAge: Date.now() + (60 + 1000 + 30),
+		resave: true,
+		saveUninitialized: true,
+	})
 );
 
 app.use(flash());
@@ -56,14 +52,14 @@ app.use("/user", require("./routes/user"));
 app.use("/streams", require("./routes/streams"));
 
 app.get("/logout", (req, res) => {
-      req.logout();
-      return res.redirect("/login");
+	req.logout();
+	return res.redirect("/login");
 });
 
 app.get("*", middleware.ensureLoggedIn(), (req, res) => {
-      res.render("index");
+	res.render("index");
 });
 
 app.listen(PORT, () => {
-      console.log(`App listening on ${PORT}`);
+	console.log(`App listening on ${PORT}`);
 });
